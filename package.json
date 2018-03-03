@@ -1,0 +1,31 @@
+{
+  "name": "@sabaki/influence",
+  "version": "1.0.0",
+  "description": "Simple Monte Carlo functions to determine dead stones on a Go board.",
+  "main": "./src/main.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SabakiHQ/influence.git"
+  },
+  "keywords": [
+    "go",
+    "weiqi",
+    "baduk",
+    "strategy",
+    "analyzer",
+    "boardgame",
+    "influence"
+  ],
+  "author": "Yichuan Shen",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/SabakiHQ/influence/issues"
+  },
+  "homepage": "https://github.com/SabakiHQ/influence",
+  "devDependencies": {
+    "tap": "^11.1.0"
+  },
+  "scripts": {
+    "test": "tap tests/*.test.js"
+  }
+}
