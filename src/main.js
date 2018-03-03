@@ -1,7 +1,9 @@
-const nearestNeighborMap = require('./nearestNeighborMap')
+let influence = {}
 
-exports.map = function(data) {
+influence.nearestNeighborMap = require('./nearestNeighborMap')
+
+influence.map = function(data) {
 
 }
 
-Object.assign(module.exports, {nearestNeighborMap})
+module.exports = influence
