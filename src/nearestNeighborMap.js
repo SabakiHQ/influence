@@ -1,6 +1,6 @@
 module.exports = function(data, sign) {
     let height = data.length
-    let width = data.length > 0 ? data[0].length : 0
+    let width = height === 0 ? 0 : data[0].length
     let map = [...Array(height)].map(_ => Array(width).fill(Infinity))
     let min = Infinity
 
