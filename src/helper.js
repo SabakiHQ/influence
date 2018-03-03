@@ -12,7 +12,7 @@ exports.getChain = function(data, v, result = [], sign = null) {
         if (!data[n[1]] || data[n[1]][n[0]] !== sign || result.some(exports.equals(n)))
             continue
 
-        getChain(data, n, result, sign)
+        exports.getChain(data, n, result, sign)
     }
 
     return result
