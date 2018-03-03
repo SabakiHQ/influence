@@ -10,7 +10,7 @@ t.test('should return same dimensions of input data', t => {
     t.end()
 })
 
-t.test('stone positions of same color should have value 0', t => {
+t.test('only stone positions of the same color should have value 0', t => {
     let sign = -1
     let result = influence.nearestNeighborMap(data.unfinished, sign)
 
@@ -18,6 +18,8 @@ t.test('stone positions of same color should have value 0', t => {
         for (let x = 0; x < data.unfinished[0].length; x++) {
             if (data.unfinished[y][x] === sign) {
                 t.equal(result[y][x], 0)
+            } else {
+                t.notEqual(result[y][x], 0)
             }
         }
     }

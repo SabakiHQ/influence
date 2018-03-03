@@ -1,4 +1,4 @@
-const {getChain, getNeighbors} = require('./helper')
+const {getNeighbors, getChain} = require('./helper')
 
 module.exports = function(data) {
     let height = data.length

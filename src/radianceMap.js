@@ -1,4 +1,4 @@
-const {hasVertex, getNeighbors, getChain} = require('./helper')
+const {getNeighbors, getChain} = require('./helper')
 
 module.exports = function(data, sign, {p1 = 6, p2 = 1.5, p3 = 2} = {}) {
     let height = data.length
@@ -8,7 +8,7 @@ module.exports = function(data, sign, {p1 = 6, p2 = 1.5, p3 = 2} = {}) {
     let done = {}
 
     let getMirroredVertex = v => {
-        if (hasVertex(v, width, height)) return v
+        if (v[0] >= 0 && v[0] < width && v[1] >= 0 && v[1] < height) return v
         return v.map((z, i) => z < 0 ? -z - 1 : z >= size[i] ? 2 * size[i] - z - 1 : z)
     }
 
@@ -18,9 +18,9 @@ module.exports = function(data, sign, {p1 = 6, p2 = 1.5, p3 = 2} = {}) {
 
         while (queue.length > 0) {
             let [v, d] = queue.shift()
-            let [x, y] = getMirroredVertex(v)
+            let mv = getMirroredVertex(v)
 
-            map[y][x] += !hasVertex(v, width, height) ? p3 : p2 / (d / p1 * 6 + 1)
+            map[mv[1]][mv[0]] += mv !== v ? p3 : p2 / (d / p1 * 6 + 1)
 
             for (let n of getNeighbors(v)) {
                 if (d + 1 > p1 || data[n[1]][n[0]] === -sign || n in visited)
