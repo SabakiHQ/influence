@@ -6,8 +6,7 @@ module.exports = function(data, sign) {
 
     let f = (x, y) => {
         if (data[y][x] === sign) min = 0
-        else if (data[y][x] === 0) min++
-        else min = Infinity
+        else min++
 
         map[y][x] = min = Math.min(min, map[y][x])
     }
