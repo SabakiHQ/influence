@@ -33,10 +33,10 @@ module.exports = function(data, {maxDistance = 6, minRadiance = 2} = {}) {
             if (neighbors.length === 0) continue
 
             let [i, j] = neighbors[0]
-            let s = map[y][x] === 0 ? map[j][i] : 0
+            let s = map[y][x] === 0 ? Math.sign(map[j][i]) : 0
 
-            if (neighbors.every(([i, j]) => map[j][i] === s))
-                map[y][x] = s
+            if (neighbors.every(([i, j]) => Math.sign(map[j][i]) === s))
+                map[y][x] = neighbors.reduce((sum, [i, j]) => sum + map[j][i],0) / neighbors.length
         }
     }
 
