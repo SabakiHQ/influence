@@ -3,7 +3,7 @@ const nearestNeighborMap = require('./nearestNeighborMap')
 const radianceMap = require('./radianceMap')
 const {getNeighbors} = require('./helper')
 
-module.exports = function(data, {maxDistance = 6, minRadiance = 2} = {}) {
+module.exports = function(data, {discrete = false, maxDistance = 6, minRadiance = 2} = {}) {
     let height = data.length
     let width = height === 0 ? 0 : data[0].length
     let map = areaMap(data)
@@ -22,6 +22,8 @@ module.exports = function(data, {maxDistance = 6, minRadiance = 2} = {}) {
 
             if (faraway || dim) map[y][x] = 0
             else map[y][x] = s * (s > 0 ? prmap[y][x] : nrmap[y][x])
+
+            if (discrete) map[y][x] = Math.sign(map[y][x])
         }
     }
 
