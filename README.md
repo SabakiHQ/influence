@@ -43,3 +43,10 @@ Returns an array of arrays of the same size as `data`. Each entry is a number, t
 This map does not take dead stones into account, i.e. it will assume all stones specified in `data` are alive. To get better results, remove dead stones first, either manually or with the [`deadstones` module](https://github.com/SabakiHQ/deadstones).
 
 If `discrete` is set to `true`, the map will only contain `-1`, `0`, or `1` as values.
+
+### `influence.nearestNeighborMap(data, sign)`
+
+* `data` - [Board data](#board-data)
+* `sign` `-1` | `1`
+
+Returns an array of arrays of the same size as `data`. Each entry is an non-negative integer which denotes the Manhattan distance to the nearest stone with the color given by `sign`. `-1` denotes white and `1` corresponds to black.
