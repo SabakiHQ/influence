@@ -71,6 +71,6 @@ Returns an array of arrays of the same size as `data`. Each entry is an non-nega
     * `p2` `<Number>` *(optional)* - Default: `1.5`
     * `p3` `<Number>` *(optional)* - Default: `2`
 
-Returns an array of arrays of the same size as `data`. Each entry is a number which encodes how many stones of the color corresponding to `sign` is in its vicinity. `-1` corresponds to white stones whereas `1` denotes black stones. Each chain of the color corresponding to `sign` emits *radiance* which diminishes over distance, adds up with the radiance of other chains, and reflects at the board edge.
+Returns an array of arrays of the same size as `data`. Each entry is a non-negative number which encodes how many stones of the color corresponding to `sign` is in its vicinity. `-1` corresponds to white stones whereas `1` denotes black stones. Each chain of the color corresponding to `sign` emits *radiance* which diminishes over distance, adds up with the radiance of other chains, and reflects at the board edge.
 
 `p1`, `p2`, and `p3` are parameters, controlling how strong the radiance is initially and how it diminishes.
