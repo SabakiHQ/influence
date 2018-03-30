@@ -1,7 +1,7 @@
 {
   "name": "@sabaki/influence",
-  "version": "1.0.0",
-  "description": "Simple Monte Carlo functions to determine dead stones on a Go board.",
+  "version": "1.0.1",
+  "description": "Simple static heuristics for estimating influence maps on Go positions.",
   "main": "./src/main.js",
   "repository": {
     "type": "git",
