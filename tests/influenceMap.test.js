@@ -38,6 +38,7 @@ t.test('should return -1, 0, 1 if discrete is set to true', t => {
 t.test('a stone at 3 3 should control the corner', t => {
     let board = [...Array(19)].map(_ => Array(19).fill(0))
     board[2][2] = 1
+    board[16][16] = -1
 
     let result = influence.map(board, {discrete: true})
     t.assert([[0, 0], [1, 0], [2, 0], [1, 1], [2, 1]].every(([x, y]) => result[y][x] === 1 && result[x][y] === 1))
