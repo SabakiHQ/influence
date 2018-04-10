@@ -10,6 +10,12 @@ Use npm to install:
 $ npm install @sabaki/influence
 ~~~
 
+Then require it as follows:
+
+~~~js
+const influence = require('@sabaki/influence');
+~~~
+
 ## API
 
 ### Board Data
