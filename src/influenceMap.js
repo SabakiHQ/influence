@@ -70,7 +70,7 @@ module.exports = function(data, {discrete = false, maxDistance = 6, minRadiance 
                     let [[i1, j1], [i2, j2]] = signedNeighbors
                     let sign = Math.sign(map[j1][i1])
 
-                    if (signedNeighbors.length >= 3 || i1 === i2 || j1 === j2
+                    if ((signedNeighbors.length >= 3 || i1 === i2 || j1 === j2)
                     && signedNeighbors.every(([i, j]) => Math.sign(map[j][i]) === sign)) {
                         map[y][x] = signedNeighbors.reduce((sum, [i, j]) => (
                             sum + map[j][i]
