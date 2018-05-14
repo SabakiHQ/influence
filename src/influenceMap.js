@@ -37,10 +37,16 @@ module.exports = function(data, {discrete = false, maxDistance = 6, minRadiance 
             // Fix holes and prevent single point areas
 
             let [i, j] = neighbors[0]
-            let s = map[y][x] === 0 ? Math.sign(map[j][i]) : 0
+            let sign = Math.sign(map[y][x])
+            let s = sign === 0 ? Math.sign(map[j][i]) : 0
 
-            if (neighbors.every(([i, j]) => Math.sign(map[j][i]) === s)) {
+            if (data[y][x] !== 0 && neighbors.every(([i, j]) => Math.sign(map[j][i]) === s)) {
                 map[y][x] = neighbors.reduce((sum, [i, j]) => sum + map[j][i], 0) / neighbors.length
+
+                if (discrete) map[y][x] = Math.sign(map[y][x])
+                continue
+            } else if (data[y][x] === 0 && neighbors.every(([i, j]) => Math.sign(map[j][i]) !== sign)) {
+                map[y][x] = 0
                 continue
             }
 
@@ -48,8 +54,7 @@ module.exports = function(data, {discrete = false, maxDistance = 6, minRadiance 
             
             let distance = Math.min(x, y, width - x - 1, height - y - 1)
 
-            if (distance === 3 && data[y][x] === 0 && map[y][x] !== 0) {
-                let sign = Math.sign(map[y][x])
+            if (distance === 3 && data[y][x] === 0 && sign !== 0) {
                 let friendlyNeighbors = neighbors
                     .filter(([i, j]) => Math.sign(map[j][i]) === sign)
 
