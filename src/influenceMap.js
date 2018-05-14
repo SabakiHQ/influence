@@ -66,11 +66,17 @@ module.exports = function(data, {discrete = false, maxDistance = 6, minRadiance 
             if (distance <= 2 && map[y][x] === 0) {
                 let signedNeighbors = neighbors.filter(([i, j]) => map[j][i] !== 0)
 
-                if (signedNeighbors.length == 2) {
+                if (signedNeighbors.length >= 2) {
                     let [[i1, j1], [i2, j2]] = signedNeighbors
+                    let sign = Math.sign(map[j1][i1])
 
-                    if ((i1 === i2 || j1 === j2) && Math.sign(map[j1][i1]) === Math.sign(map[j2][i2])) {
-                        map[y][x] = (map[j1][i1] + map[j2][i2]) / 2
+                    if (signedNeighbors.length >= 3 || i1 === i2 || j1 === j2
+                    && signedNeighbors.every(([j, i]) => Math.sign(map[j][i]) === sign)) {
+                        map[y][x] = signedNeighbors.reduce((sum, [j, i]) => (
+                            sum + map[j][i]
+                        ), 0) / signedNeighbors.length
+                        
+                        if (discrete) map[y][x] = Math.sign(map[y][x])
                         continue
                     }
                 }
