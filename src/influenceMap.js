@@ -40,12 +40,12 @@ module.exports = function(data, {discrete = false, maxDistance = 6, minRadiance 
             let sign = Math.sign(map[y][x])
             let s = sign === 0 ? Math.sign(map[j][i]) : 0
 
-            if (data[y][x] !== 0 && neighbors.every(([i, j]) => Math.sign(map[j][i]) === s)) {
+            if (sign === 0 && s !== 0 && neighbors.every(([i, j]) => Math.sign(map[j][i]) === s)) {
                 map[y][x] = neighbors.reduce((sum, [i, j]) => sum + map[j][i], 0) / neighbors.length
 
                 if (discrete) map[y][x] = Math.sign(map[y][x])
                 continue
-            } else if (data[y][x] === 0 && neighbors.every(([i, j]) => Math.sign(map[j][i]) !== sign)) {
+            } else if (sign !== 0 && data[y][x] === 0 && neighbors.every(([i, j]) => Math.sign(map[j][i]) !== sign)) {
                 map[y][x] = 0
                 continue
             }
