@@ -55,7 +55,7 @@ module.exports = function(data, {discrete = false, maxDistance = 6, minRadiance 
             
             let distance = Math.min(x, y, width - x - 1, height - y - 1)
 
-            if (distance <= 3 && sign !== 0) {
+            if (sign !== 0) {
                 let friendlyNeighbors = getNeighbors([x, y])
                     .filter(([i, j]) => map[j] && Math.sign(map[j][i]) === sign)
 
