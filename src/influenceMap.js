@@ -50,11 +50,11 @@ module.exports = function(data, {discrete = false, maxDistance = 6, minRadiance 
                 continue
             }
 
-            // Fix ragged territory
+            // Fix ragged areas
             
             let distance = Math.min(x, y, width - x - 1, height - y - 1)
 
-            if (distance === 3 && data[y][x] === 0 && sign !== 0) {
+            if (distance <= 3 && data[y][x] === 0 && sign !== 0) {
                 let friendlyNeighbors = neighbors
                     .filter(([i, j]) => Math.sign(map[j][i]) === sign)
 
