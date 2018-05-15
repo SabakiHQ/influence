@@ -58,7 +58,7 @@ t.test('should not have holes or single point areas', t => {
 
             if (neighbors.length === 0) continue
 
-            let sign = result[y][x] === 0 ? data.middle[neighbors[0][1]][neighbors[0][0]] : 0
+            let sign = result[y][x] === 0 ? result[neighbors[0][1]][neighbors[0][0]] : 0
 
             if (result[y][x] === 0 && sign === 0) continue
 
