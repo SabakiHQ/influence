@@ -23,6 +23,19 @@ t.test('should have same sign as stones on stone vertices', t => {
     t.end()
 })
 
+t.test('should return a number between -1 and 1', t => {
+    let result = influence.map(data.unfinished)
+
+    for (let y = 0; y < data.unfinished.length; y++) {
+        for (let x = 0; x < data.unfinished[0].length; x++) {
+            t.assert(-1 <= result[y][x])
+            t.assert(result[y][x] <= 1)
+        }
+    }
+
+    t.end()
+})
+
 t.test('should return -1, 0, 1 if discrete is set to true', t => {
     let result = influence.map(data.unfinished, {discrete: true})
 

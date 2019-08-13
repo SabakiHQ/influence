@@ -49,7 +49,7 @@ The board arrangement is represented by an array of arrays. Each of those subarr
 
       Only assigns a non-zero number to a vertex if the vertex has radiance in its corresponding color greater or equal to `minRadiance`.
 
-Returns an array of arrays of the same size as `data`. Each entry is a number, the bigger it is the greater the influence of a color. A negative number corresponds to white influence whereas a positive number denotes black influence.
+Returns an array of arrays of the same size as `data`. Each entry is a number between `-1` and `1` inclusive. A negative number corresponds to white influence whereas a positive number denotes black influence.
 
 This map does not take dead stones into account, i.e. it will assume all stones specified in `data` are alive. To get better results, remove dead stones first, either manually or with the [`deadstones` module](https://github.com/SabakiHQ/deadstones).
 

@@ -27,8 +27,8 @@ module.exports = function(data) {
                     if (!data[ny] || data[ny][nx] == null || data[ny][nx] === 0) continue
 
                     if (sign === 0) {
-                        sign = data[ny][nx]
-                    } else if (sign !== data[ny][nx]) {
+                        sign = Math.sign(data[ny][nx])
+                    } else if (sign !== Math.sign(data[ny][nx])) {
                         indicator = 0
                         break
                     }
