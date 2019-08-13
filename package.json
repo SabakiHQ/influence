@@ -1,6 +1,6 @@
 {
   "name": "@sabaki/influence",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Simple static heuristics for estimating influence maps on Go positions.",
   "main": "./src/main.js",
   "repository": {
