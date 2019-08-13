@@ -6,7 +6,8 @@ const {getNeighbors} = require('./helper')
 module.exports = function(data, {discrete = false, maxDistance = 6, minRadiance = 2} = {}) {
     let height = data.length
     let width = height === 0 ? 0 : data[0].length
-    let map = areaMap(data)
+    let areamap = areaMap(data)
+    let map = areamap.map(row => [...row])
     let pnnmap = nearestNeighborMap(data, 1)
     let nnnmap = nearestNeighborMap(data, -1)
     let prmap = radianceMap(data, 1)
@@ -36,7 +37,7 @@ module.exports = function(data, {discrete = false, maxDistance = 6, minRadiance 
 
     for (let x = 0; x < width; x++) {
         for (let y = 0; y < height; y++) {
-            if (data[y][x] !== 0) continue
+            if (areamap[y][x] !== 0) continue
 
             // Prevent single point areas
 
