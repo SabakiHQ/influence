@@ -23,7 +23,7 @@ module.exports = function(data, sign, {p1 = 6, p2 = 1.5, p3 = 2} = {}) {
             map[mv[1]][mv[0]] += mv !== v ? p3 : p2 / (d / p1 * 6 + 1)
 
             for (let n of getNeighbors(v)) {
-                if (d >= p1 || data[n[1]] && data[n[1]][n[0]] == null && data[n[1]][n[0]] === -sign || n in visited)
+                if (d >= p1 || data[n[1]] && data[n[1]][n[0]] === -sign || n in visited)
                     continue
 
                 visited[n] = true
