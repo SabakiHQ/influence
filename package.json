@@ -23,7 +23,7 @@
   },
   "homepage": "https://github.com/SabakiHQ/influence",
   "devDependencies": {
-    "tap": "^14.6.1"
+    "tap": "^14.10.6"
   },
   "scripts": {
     "test": "tap tests/*.test.js"
