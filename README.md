@@ -80,3 +80,27 @@ Returns an array of arrays of the same size as `data`. Each entry is an non-nega
 Returns an array of arrays of the same size as `data`. Each entry is a non-negative number which encodes how many stones of the color corresponding to `sign` is in its vicinity. `-1` corresponds to white stones whereas `1` denotes black stones. Each chain of the color corresponding to `sign` emits *radiance* which diminishes over distance, adds up with the radiance of other chains, and reflects at the board edge.
 
 `p1`, `p2`, and `p3` are parameters, controlling how strong the radiance is initially and how it diminishes.
+
+## Build Demo
+
+Make sure you have Node.js v12 and npm installed. First, clone this repository via Git, then install all dependencies with npm:
+
+~~~
+$ git clone https://github.com/SabakiHQ/influence
+$ cd influence
+$ npm install
+~~~
+
+Use the `build-demo` script to build the demo project:
+
+~~~
+$ npm run build-demo
+~~~
+
+You can use the `watch-demo` command for development:
+
+~~~
+$ npm run watch-demo
+~~~
+
+Open `demo/index.html` in your browser to run demo.

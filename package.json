@@ -23,9 +23,15 @@
   },
   "homepage": "https://github.com/SabakiHQ/influence",
   "devDependencies": {
-    "tap": "^14.10.6"
+    "@sabaki/shudan": "^1.5.3",
+    "preact": "^10.3.1",
+    "tap": "^14.10.6",
+    "webpack": "^4.41.5",
+    "webpack-cli": "^3.3.10"
   },
   "scripts": {
-    "test": "tap tests/*.test.js"
+    "test": "tap tests/*.test.js",
+    "build-demo": "webpack --entry ./demo/main.js -o ./demo/bundle.js --progress --mode production",
+    "watch-demo": "webpack --entry ./demo/main.js -o ./demo/bundle.js --progress --mode development --watch"
   }
 }
