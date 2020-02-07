@@ -4,7 +4,7 @@ exports.getChain = function(data, v, result = [], done = {}, sign = null) {
     if (sign == null) sign = data[v[1]][v[0]]
     let neighbors = exports.getNeighbors(v)
 
-    result.push(v)    
+    result.push(v)
     done[v] = true
 
     for (let n of neighbors) {
@@ -15,4 +15,12 @@ exports.getChain = function(data, v, result = [], done = {}, sign = null) {
     }
 
     return result
+}
+
+exports.average = function(arr, defaultValue = null) {
+    if (arr.length !== 0) {
+        return arr.reduce((sum, x) => sum + x, 0) / arr.length
+    }
+
+    return defaultValue
 }

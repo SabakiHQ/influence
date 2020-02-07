@@ -1,7 +1,7 @@
 const areaMap = require('./areaMap')
 const nearestNeighborMap = require('./nearestNeighborMap')
 const radianceMap = require('./radianceMap')
-const {getNeighbors} = require('./helper')
+const {getNeighbors, average} = require('./helper')
 
 module.exports = function(data, {discrete = false, maxDistance = 6, minRadiance = 2} = {}) {
     let height = data.length
@@ -39,14 +39,16 @@ module.exports = function(data, {discrete = false, maxDistance = 6, minRadiance 
         for (let y = 0; y < height; y++) {
             if (areamap[y][x] !== 0) continue
 
-            // Prevent single point areas
-
             let sign = Math.sign(map[y][x])
 
-            if (sign !== 0) {
-                let neighbors = getNeighbors([x, y])
-                    .filter(([i, j]) => data[j] && data[j][i] != null)
+            let neighbors = getNeighbors([x, y])
+                .filter(([i, j]) => data[j] && data[j][i] != null)
+            let friendlyNeighbors = sign === 0 ? null : neighbors
+                .filter(([i, j]) => Math.sign(map[j][i]) === sign)
 
+            // Prevent single point areas
+
+            if (sign !== 0) {
                 if (
                     neighbors.length >= 2
                     && neighbors.every(([i, j]) => Math.sign(map[j][i]) !== sign)
@@ -59,9 +61,6 @@ module.exports = function(data, {discrete = false, maxDistance = 6, minRadiance 
             // Fix ragged areas
 
             if (sign !== 0) {
-                let friendlyNeighbors = getNeighbors([x, y])
-                    .filter(([i, j]) => map[j] && Math.sign(map[j][i]) === sign)
-
                 if (friendlyNeighbors.length === 1) {
                     let [i, j] = friendlyNeighbors[0]
 
@@ -76,8 +75,8 @@ module.exports = function(data, {discrete = false, maxDistance = 6, minRadiance 
 
             let distance = Math.min(x, y, width - x - 1, height - y - 1)
 
-            if (distance <= 2 && sign === 0) {
-                let signedNeighbors = getNeighbors([x, y])
+            if (distance <= 2 && sign !== 0) {
+                let signedNeighbors = neighbors
                     .filter(([i, j]) => map[j] && map[j][i] !== 0)
 
                 if (signedNeighbors.length >= 2) {
@@ -89,12 +88,26 @@ module.exports = function(data, {discrete = false, maxDistance = 6, minRadiance 
                         && signedNeighbors.every(([i, j]) => Math.sign(map[j][i]) === s)
                     ) {
                         map[y][x] = !discrete
-                            ? Math.max(...signedNeighbors.map(([i, j]) => map[j][i]))
+                            ? average(signedNeighbors.map(([i, j]) => map[j][i]))
                             : s
                         sign = s
                     }
                 }
             }
+
+            // Blur
+
+            if (!discrete && sign !== 0) {
+                map[y][x] = average([[x, y], ...friendlyNeighbors].map(([i, j]) => map[j][i]))
+            }
+        }
+    }
+
+    for (let x = 0; x < width; x++) {
+        for (let y = 0; y < height; y++) {
+            if (areamap[y][x] !== 0 || map[y][x] === 0) continue
+
+            let sign = Math.sign(map[y][x])
 
             // Normalize
 
