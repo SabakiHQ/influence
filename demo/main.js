@@ -56,6 +56,14 @@ const createTwoWayRadioBox = component => (
     )
 )
 
+const maxMapValue = map => {
+    return Math.max(...map.map(row => Math.max(...row)))
+}
+
+const diffMaps = (map1, map2) => {
+    return map1.map((row, j) => row.map((x, i) => x - map2[j][i]))
+}
+
 class App extends Component {
     constructor(props) {
         super(props)
@@ -67,8 +75,10 @@ class App extends Component {
             showAreaMap: false,
             showBlackNearestNeighborMap: false,
             showWhiteNearestNeighborMap: false,
+            showCombinedNearestNeighborMap: false,
             showBlackRadianceMap: false,
             showWhiteRadianceMap: false,
+            showCombinedRadianceMap: false,
             deadStones: []
         }
 
@@ -77,8 +87,8 @@ class App extends Component {
 
     render() {
         let {showInfluenceMap, showDiscreteInfluenceMap, showAreaMap,
-            showBlackNearestNeighborMap, showWhiteNearestNeighborMap,
-            showBlackRadianceMap, showWhiteRadianceMap} = this.state
+            showBlackNearestNeighborMap, showWhiteNearestNeighborMap, showCombinedNearestNeighborMap,
+            showBlackRadianceMap, showWhiteRadianceMap, showCombinedRadianceMap} = this.state
 
         let signMap = JSON.parse(JSON.stringify(originalSignMap))
 
@@ -87,17 +97,37 @@ class App extends Component {
         }
 
         let sign = showBlackNearestNeighborMap || showBlackRadianceMap ? 1 : -1
+        let index = sign > 0 ? 1 : 0
+
         let influenceMap = showInfluenceMap || showDiscreteInfluenceMap
             ? influence.map(signMap, {discrete: showDiscreteInfluenceMap})
             : null
-        let nearestNeighborMap = showBlackNearestNeighborMap || showWhiteNearestNeighborMap
-            ? influence.nearestNeighborMap(signMap, sign)
+
+        let nearestNeighborMaps = showBlackNearestNeighborMap
+            || showWhiteNearestNeighborMap
+            || showCombinedNearestNeighborMap
+                ? [-1, 1].map(s => influence.nearestNeighborMap(signMap, s))
+                : null
+        let combinedNearestNeighborMap = showCombinedNearestNeighborMap
+            ? diffMaps(nearestNeighborMaps[0], nearestNeighborMaps[1])
             : null
-        let radianceMap = showBlackRadianceMap || showWhiteRadianceMap
-            ? influence.radianceMap(signMap, sign)
+        let maxCombinedDistance = combinedNearestNeighborMap != null
+            ? maxMapValue(combinedNearestNeighborMap)
             : null
-        let maxRadiance = radianceMap != null
-            ? Math.max(...radianceMap.map(row => Math.max(...row)))
+
+        let radianceMaps = showBlackRadianceMap
+            || showWhiteRadianceMap
+            || showCombinedRadianceMap
+                ? [-1, 1].map(s => influence.radianceMap(signMap, s))
+                : null
+        let maxRadiance = radianceMaps != null
+            ? maxMapValue(radianceMaps[index])
+            : null
+        let combinedRadianceMap = showCombinedRadianceMap
+            ? diffMaps(radianceMaps[1], radianceMaps[0])
+            : null
+        let maxCombinedRadiance = combinedRadianceMap != null
+            ? maxMapValue(combinedRadianceMap.map(row => row.map(Math.abs)))
             : null
 
         return h('section',
@@ -131,8 +161,13 @@ class App extends Component {
                     stateKey: 'showWhiteNearestNeighborMap',
                     text: 'Show nearest neighbor map for white'
                 }),
+                h(this.RadioBox, {
+                    stateKey: 'showCombinedNearestNeighborMap',
+                    text: 'Show combined nearest neighbor map'
+                }),
                 h(this.RadioBox, {stateKey: 'showBlackRadianceMap', text: 'Show radiance map for black'}),
-                h(this.RadioBox, {stateKey: 'showWhiteRadianceMap', text: 'Show radiance map for white'})
+                h(this.RadioBox, {stateKey: 'showWhiteRadianceMap', text: 'Show radiance map for white'}),
+                h(this.RadioBox, {stateKey: 'showCombinedRadianceMap', text: 'Show combined radiance map'})
             ),
 
             h('div', {},
@@ -143,18 +178,32 @@ class App extends Component {
                         ? influenceMap.map(row => row.map(x => (Math.abs(x) * 2 + 1) / 4 * Math.sign(x)))
                         : showAreaMap
                         ? influence.areaMap(signMap)
-                        : nearestNeighborMap != null
-                        ? nearestNeighborMap.map(row => row.map(x => sign * Math.exp(-x / 2)))
-                        : radianceMap != null
-                        ? radianceMap.map(row => row.map(x => sign * x / maxRadiance))
+                        : combinedNearestNeighborMap != null
+                        ? combinedNearestNeighborMap.map(row => row.map(x => x / maxCombinedDistance))
+                        : nearestNeighborMaps != null
+                        ? nearestNeighborMaps[index].map(row => row.map(x => sign * Math.exp(-x / 2)))
+                        : combinedRadianceMap != null
+                        ? combinedRadianceMap.map(row => row.map(x => x / maxCombinedRadiance))
+                        : radianceMaps != null
+                        ? radianceMaps[index].map(row => row.map(x => sign * x / maxRadiance))
                         : null,
-                    markerMap: nearestNeighborMap != null
-                        ? nearestNeighborMap.map(row => row.map(x => ({
+                    markerMap: combinedNearestNeighborMap != null
+                        ? combinedNearestNeighborMap.map(row => row.map(x => ({
                             type: 'label',
                             label: x.toString()
                         })))
-                        : radianceMap != null
-                        ? radianceMap.map(row => row.map(x => ({
+                        : nearestNeighborMaps != null
+                        ? nearestNeighborMaps[index].map(row => row.map(x => ({
+                            type: 'label',
+                            label: x.toString()
+                        })))
+                        : combinedRadianceMap != null
+                        ? combinedRadianceMap.map(row => row.map(x => ({
+                            type: 'label',
+                            label: x.toString().slice(0, 4)
+                        })))
+                        : radianceMaps != null
+                        ? radianceMaps[index].map(row => row.map(x => ({
                             type: 'label',
                             label: x.toString().slice(0, 4)
                         })))
