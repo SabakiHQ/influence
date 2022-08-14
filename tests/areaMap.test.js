@@ -5,7 +5,7 @@ const data = require('./data')
 t.test('should work on a finished game', t => {
     let result = influence.areaMap(data.finished)
 
-    t.deepEqual(result, [ 
+    t.same(result, [
         [ -1, -1, -1, -1, -1, -1, 1, 1, 1, 1, -1, -1, -1, -1, -1, -1, -1, 1, 1 ],
         [ -1, -1, -1, -1, -1, 1, 1, 1, 1, 1, -1, -1, -1, -1, -1, -1, 1, 1, 1 ],
         [ -1, -1, -1, -1, -1, 1, 1, 1, 1, 1, 1, -1, -1, 1, -1, 1, 1, 1, 1 ],
@@ -33,7 +33,7 @@ t.test('should work on a finished game', t => {
 t.test('should work on an unfinished game', t => {
     let result = influence.areaMap(data.unfinished)
 
-    t.deepEqual(result, [
+    t.same(result, [
         [ 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ],
         [ 1, -1, -1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, 0 ],
         [ -1, -1, -1, -1, 1, 1, 0, 1, 0, 1, 1, 0, -1, 0, -1, 0, -1, 1, 0 ],

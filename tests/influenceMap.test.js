@@ -28,8 +28,8 @@ t.test('should return a number between -1 and 1', t => {
 
     for (let y = 0; y < data.unfinished.length; y++) {
         for (let x = 0; x < data.unfinished[0].length; x++) {
-            t.assert(-1 <= result[y][x])
-            t.assert(result[y][x] <= 1)
+            t.ok(-1 <= result[y][x])
+            t.ok(result[y][x] <= 1)
         }
     }
 
@@ -41,7 +41,7 @@ t.test('should return -1, 0, 1 if discrete is set to true', t => {
 
     for (let y = 0; y < data.unfinished.length; y++) {
         for (let x = 0; x < data.unfinished[0].length; x++) {
-            t.assert([-1, 0, 1].includes(result[y][x]))
+            t.ok([-1, 0, 1].includes(result[y][x]))
         }
     }
 
@@ -54,7 +54,7 @@ t.test('a stone at 3 3 should control the corner', t => {
     board[16][16] = -1
 
     let result = influence.map(board, {discrete: true})
-    t.assert([[0, 0], [1, 0], [2, 0], [1, 1], [2, 1]].every(([x, y]) => result[y][x] === 1 && result[x][y] === 1))
+    t.ok([[0, 0], [1, 0], [2, 0], [1, 1], [2, 1]].every(([x, y]) => result[y][x] === 1 && result[x][y] === 1))
 
     t.end()
 })
@@ -75,7 +75,7 @@ t.test('should not have holes or single point areas', t => {
 
             if (result[y][x] === 0 && sign === 0) continue
 
-            t.notDeepEqual(neighbors.map(([i, j]) => result[j][i]), neighbors.map(_ => sign))
+            t.notSame(neighbors.map(([i, j]) => result[j][i]), neighbors.map(_ => sign))
         }
     }
 

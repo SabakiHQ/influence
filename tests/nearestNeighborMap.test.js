@@ -19,7 +19,7 @@ t.test('only stone positions of the same color should have value 0', t => {
             if (data.unfinished[y][x] === sign) {
                 t.equal(result[y][x], 0)
             } else {
-                t.notEqual(result[y][x], 0)
+                t.not(result[y][x], 0)
             }
         }
     }

@@ -25,13 +25,13 @@
   "devDependencies": {
     "@sabaki/shudan": "^1.5.3",
     "preact": "^10.3.1",
-    "tap": "^14.10.6",
-    "webpack": "^4.41.5",
-    "webpack-cli": "^3.3.10"
+    "tap": "^16.3.0",
+    "webpack": "^5.74.0",
+    "webpack-cli": "^4.10.0"
   },
   "scripts": {
-    "test": "tap tests/*.test.js",
-    "build-demo": "webpack --entry ./demo/main.js -o ./demo/bundle.js --progress --mode production",
-    "watch-demo": "webpack --entry ./demo/main.js -o ./demo/bundle.js --progress --mode development --watch"
+    "test": "tap --no-check-coverage tests/*.test.js",
+    "build-demo": "webpack --entry ./demo/main.js -o ./demo --output-filename bundle.js --progress --mode production",
+    "watch-demo": "webpack --entry ./demo/main.js -o ./demo --output-filename bundle.js --progress --mode development --watch"
   }
 }
