@@ -1,7 +1,7 @@
-module.exports = function(data, sign) {
+module.exports = function (data, sign) {
     let height = data.length
     let width = height === 0 ? 0 : data[0].length
-    let map = [...Array(height)].map(_ => Array(width).fill(Infinity))
+    let map = Array(height).fill(null).map(_ => Array(width).fill(Infinity))
     let min = Infinity
 
     let f = (x, y) => {

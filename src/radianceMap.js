@@ -1,9 +1,9 @@
-const {getNeighbors, getChain} = require('./helper')
+const { getNeighbors, getChain } = require('./helper')
 
-module.exports = function(data, sign, {p1 = 6, p2 = 1.5, p3 = 2} = {}) {
+module.exports = function (data, sign, { p1 = 6, p2 = 1.5, p3 = 2 } = {}) {
     let height = data.length
     let width = height === 0 ? 0 : data[0].length
-    let map = [...Array(height)].map(_ => Array(width).fill(0))
+    let map = Array(height).fill(null).map(_ => Array(width).fill(0))
     let size = [width, height]
     let done = {}
 

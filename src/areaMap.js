@@ -1,9 +1,9 @@
-const {getNeighbors, getChain} = require('./helper')
+const { getNeighbors, getChain } = require('./helper')
 
-module.exports = function(data) {
+module.exports = function (data) {
     let height = data.length
     let width = height === 0 ? 0 : data[0].length
-    let map = [...Array(height)].map(_ => Array(width).fill(null))
+    let map = Array(height).fill(null).map(_ => Array(width).fill(null))
 
     for (let x = 0; x < width; x++) {
         for (let y = 0; y < height; y++) {
