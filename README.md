@@ -1,4 +1,4 @@
-# @sabaki/influence [![Build Status](https://travis-ci.org/SabakiHQ/influence.svg?branch=master)](https://travis-ci.org/SabakiHQ/influence)
+# @sabaki/influence [![CI](https://github.com/SabakiHQ/influence/actions/workflows/ci.yml/badge.svg)](https://github.com/SabakiHQ/influence/actions/workflows/ci.yml)
 
 Simple static heuristics for estimating influence maps on Go positions.
 
