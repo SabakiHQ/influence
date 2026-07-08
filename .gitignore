@@ -1,3 +1,4 @@
 .nyc_output/
+.tap/
 node_modules/
 demo/bundle.js
